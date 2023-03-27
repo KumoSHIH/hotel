@@ -1,10 +1,10 @@
 <script>
 import axios from 'axios'
-import { onMounted, computed, reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import Logo from '../components/Logo.vue'
 
 export default {
-  name: 'HomeView',
+  name: 'Room',
   components: {
     Logo
   },
