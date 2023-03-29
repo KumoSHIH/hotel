@@ -58,13 +58,14 @@ export default {
     class="container">
     <div class="top">
       <Logo/>
+      <!-- <router-link :to="{ name: 'roomInfo' }">roomInfo</router-link> -->
       <ul class="room-list">
         <li
           v-for="item,index in data"
           :key="item.id"
           :class="index === info.index ? 'active' : ''"
           @mouseenter="hoverHandler(item,index)">
-          <a href="javascript:;">{{ item.name }}</a>
+          <router-link :to="{ name: 'roomInfo', params: {id: `${item.id}`} }">{{ item.name }}</router-link>
         </li>
       </ul>
     </div>

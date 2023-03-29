@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Room from '../views/Room.vue'
+import RoomInfo from '../views/RoomInfo.vue'
 
 const routes = [
   {
@@ -7,6 +8,11 @@ const routes = [
     name: 'room',
     component: Room
   },
+  {
+    path: '/roomInfo',
+    name: 'roomInfo',
+    component: RoomInfo
+  }
 ]
 
 const router = createRouter({
