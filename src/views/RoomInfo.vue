@@ -12,6 +12,7 @@ export default {
     const descriptionShort = reactive({});
     const checkInAndOut = reactive({});
     const amenities = reactive({});
+    const Bed = ref('');
 
     onMounted(() => {
       getRoom();
@@ -32,6 +33,7 @@ export default {
       Object.assign(descriptionShort, res.data.room[0].descriptionShort)
       Object.assign(checkInAndOut, res.data.room[0].checkInAndOut)
       Object.assign(amenities, res.data.room[0].amenities)
+      Bed.value = res.data.room[0].descriptionShort.Bed[0]
       console.log(room);
     }
     // console.log(route.params.id);
@@ -40,7 +42,8 @@ export default {
       photo,
       descriptionShort,
       checkInAndOut,
-      amenities
+      amenities,
+      Bed
     }
   }
 }
@@ -55,8 +58,8 @@ export default {
           <div class="photo-box" :style="{ backgroundImage: 'url('+ photo[0] +')' }"></div>
         </div>
         <div class="photo-right">
-          <div class="photo-box box1" :style="{ backgroundImage: 'url('+ photo[1] +')' }"></div>
-          <div class="photo-box box2" :style="{ backgroundImage: 'url('+ photo[2] +')' }"></div>
+          <div class="photo-box" :style="{ backgroundImage: 'url('+ photo[1] +')' }"></div>
+          <div class="photo-box" :style="{ backgroundImage: 'url('+ photo[2] +')' }"></div>
         </div>
       </div>
     </div>
@@ -65,7 +68,7 @@ export default {
         <div class="content-left">
           <h2>{{ room.name }}</h2>
           <p class="fz-14">房客人數限制 : {{ descriptionShort.GuestMin }} ~ {{ descriptionShort.GuestMax }}人</p>
-          <p class="fz-14">床型 : {{ descriptionShort.Bed }}</p>
+          <p class="fz-14">床型 : {{ Bed }}</p>
           <p class="fz-14">衛浴數量 : {{ descriptionShort['Private-Bath'] }} 間</p>
           <p class="fz-14">房間大小 : {{ descriptionShort.Footage }} 平方公尺</p>
           <p class="fz-12">{{ room.description }}</p>
