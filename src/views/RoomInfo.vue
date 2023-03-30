@@ -49,9 +49,7 @@ export default {
 <template>
   <div>
     <div class="banner">
-      <div class="logo">
-        <div class="logo-box">WhiteSpace</div>
-      </div>
+      <router-link class="logo" :to="{name: 'room'}"><div class="logo-box">WhiteSpace</div></router-link>
       <div class="banner-photo">
         <div class="photo-left">
           <div class="photo-box" :style="{ backgroundImage: 'url('+ photo[0] +')' }"></div>
@@ -88,51 +86,51 @@ export default {
           </div>
           <div class="spec">
             <ul>
-              <li :class="!amenities[Wi-Fi] ? 'active' : ''">
+              <li :class="!amenities['Wi-Fi'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'wifi']" /></div>
                 <span>Wi-Fi</span>
               </li>
-              <li :class="!amenities[Television] ? 'active' : ''">
+              <li :class="!amenities['Television'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'phone']" /></div>
                 <span>電話</span>
               </li>
-              <li :class="!amenities[Great-View] ? 'active' : ''">
+              <li :class="!amenities['Great-View'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'mountain-sun']" /></div>
                 <span>漂亮的視野</span>
               </li>
-              <li :class="!amenities[Breakfast] ? 'active' : ''">
+              <li :class="!amenities['Breakfast'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'utensils']" /></div>
                 <span>早餐</span>
               </li>
-              <li :class="!amenities[Air-Conditioner] ? 'active' : ''">
+              <li :class="!amenities['Air-Conditioner'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'wind']" /></div>
                 <span>空調</span>
               </li>
-              <li :class="!amenities[Smoke-Free] ? 'active' : ''">
+              <li :class="!amenities['Smoke-Free'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fasr', 'ban-smoking']" /></div>
                 <span>禁止吸菸</span>
               </li>
-              <li :class="!amenities[Mini-Bar] ? 'active' : ''">
+              <li :class="!amenities['Mini-Bar'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'martini-glass-citrus']" /></div>
                 <span>Mini Bar</span>
               </li>
-              <li :class="!amenities[Refrigerator] ? 'active' : ''">
+              <li :class="!amenities['Refrigerator'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'box']" /></div>
                 <span>冰箱</span>
               </li>
-              <li :class="!amenities[Child-Friendly] ? 'active' : ''">
+              <li :class="!amenities['Child-Friendly'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'baby']" /></div>
                 <span>適合兒童</span>
               </li>
-              <li :class="!amenities[Room-Service] ? 'active' : ''">
+              <li :class="!amenities['Room-Service'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fass', 'bell']" /></div>
                 <span>Room Service</span>
               </li>
-              <li :class="!amenities[Sofa] ? 'active' : ''">
+              <li :class="!amenities['Sofa'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'couch']" /></div>
                 <span>沙發</span>
               </li>
-              <li :class="!amenities[Pet-Friendly] ? 'active' : ''">
+              <li :class="!amenities['Pet-Friendly'] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'dog']" /></div>
                 <span>寵物攜帶</span>
               </li>
@@ -156,8 +154,9 @@ export default {
 
 <style lang="scss" scoped>
   .banner {
+    position: relative;
+    overflow: hidden;
     height: 600px;
-    // background-color: #d9d9d9;
     padding: 50px 50px 0;
   }
   .banner-photo {
@@ -168,7 +167,7 @@ export default {
     height: 100%;
     display: flex;
     .photo-box {
-      position: relative;
+      
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -177,20 +176,26 @@ export default {
   .photo-left {
     max-width: 1300px;
     width: 100%;
-    // border: solid 1px;
+    position: relative;
+    overflow: hidden;
     .photo-box{
-      padding-bottom: 46.1%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
     }
   }
   .photo-right {
+    position: relative;
+    overflow: hidden;
     max-width: 620px;
     width: 100%;
     display: flex;
     flex-direction: column;
     width: 100%;
     .photo-box {
-      // border: solid 1px;
-      padding-bottom: 48.38%;
+      height: 100%;
     }
   }
 
@@ -203,6 +208,7 @@ export default {
       width: 150px;
       height: 45px;
       position: absolute;
+      z-index: 1;
       left: -10px;
       top: -10px;
       background:repeating-linear-gradient(45deg, 
@@ -216,7 +222,7 @@ export default {
       letter-spacing: 1.88px;
       background-color: #d9d9d9;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
   }
   .content {
