@@ -4,7 +4,6 @@ import { onMounted, reactive } from 'vue'
 import Logo from '../components/Logo.vue'
 
 export default {
-  name: 'Room',
   components: {
     Logo
   },
@@ -44,10 +43,24 @@ export default {
       info.num = `0${index+1}`;
       info.photo = item.imageUrl;
     }
+    let roomDetail = (item) => {
+      // const url = `https://challenge.thef2e.com/api/thef2e2019/stage6/room/${item.id}`;
+      // const token = 'Bearer L8mpl5aBnzURp4mYIQqYbhRV8bKkCWDoaDWWEObspDxUFmF1BXZzkpkt3aLc';
+
+      // const res = axios.get(url, {
+      //   headers: {
+      //     Authorization: token,
+      //     accept: 'application/json',
+      //   }
+      // });
+      // console.log(res);
+      // router.push({ path: '/roomInfo', params: { id: item.id } })
+    }
     return {
       data,
       hoverHandler,
-      info
+      info,
+      roomDetail
     }
   }
 }
@@ -64,8 +77,9 @@ export default {
           v-for="item,index in data"
           :key="item.id"
           :class="index === info.index ? 'active' : ''"
-          @mouseenter="hoverHandler(item,index)">
-          <router-link :to="{ name: 'roomInfo', params: {id: `${item.id}`} }">{{ item.name }}</router-link>
+          @mouseenter="hoverHandler(item,index)"
+          >
+          <router-link :to="{ name: 'roomInfo', params: { id: item.id }}">{{ item.name }}</router-link>
         </li>
       </ul>
     </div>

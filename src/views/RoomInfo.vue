@@ -1,10 +1,47 @@
 <script>
-import Logo from '../components/Logo.vue'
+import axios from 'axios';
+import { useRoute } from 'vue-router'
+import { onMounted, ref, reactive } from 'vue';
 
 export default {
-  name: 'RoomInfo',
-  components: {
-    Logo
+  
+  setup() {
+    const route = useRoute();
+    const room = reactive({});
+    const photo = reactive({});
+    const descriptionShort = reactive({});
+    const checkInAndOut = reactive({});
+    const amenities = reactive({});
+
+    onMounted(() => {
+      getRoom();
+    })
+    let getRoom = async() => {
+      const url = `https://challenge.thef2e.com/api/thef2e2019/stage6/room/${route.params.id}`;
+      const token = 'Bearer L8mpl5aBnzURp4mYIQqYbhRV8bKkCWDoaDWWEObspDxUFmF1BXZzkpkt3aLc';
+
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: token,
+          accept: 'application/json',
+        }
+      })
+      // console.log(res);
+      Object.assign(room, res.data.room[0])
+      Object.assign(photo, res.data.room[0].imageUrl)
+      Object.assign(descriptionShort, res.data.room[0].descriptionShort)
+      Object.assign(checkInAndOut, res.data.room[0].checkInAndOut)
+      Object.assign(amenities, res.data.room[0].amenities)
+      console.log(room);
+    }
+    // console.log(route.params.id);
+    return {
+      room,
+      photo,
+      descriptionShort,
+      checkInAndOut,
+      amenities
+    }
   }
 }
 </script>
@@ -16,19 +53,24 @@ export default {
         <div class="logo-box">WhiteSpace</div>
       </div>
       <div class="banner-photo">
-        <div class="photo-left"></div>
-        <div class="photo-right"></div>
+        <div class="photo-left">
+          <div class="photo-box" :style="{ backgroundImage: 'url('+ photo[0] +')' }"></div>
+        </div>
+        <div class="photo-right">
+          <div class="photo-box box1" :style="{ backgroundImage: 'url('+ photo[1] +')' }"></div>
+          <div class="photo-box box2" :style="{ backgroundImage: 'url('+ photo[2] +')' }"></div>
+        </div>
       </div>
     </div>
     <section class="d-flex jcc">
       <div class="content">
         <div class="content-left">
-          <h2>Single Room</h2>
-          <p class="fz-14">房客人數限制 : 1~1人</p>
-          <p class="fz-14">床型 : 單人床</p>
-          <p class="fz-14">衛浴數量 : 1間</p>
-          <p class="fz-14">房間大小 : 18平方公尺</p>
-          <p class="fz-12">Single Room is only reserved for one guest. There is a bedroom with a single size bed and a private bathroom. Everything you need prepared for you: sheets and blankets, towels, soap and shampoo, hairdryer are provided. In the room there is AC and of course WiFi.</p>
+          <h2>{{ room.name }}</h2>
+          <p class="fz-14">房客人數限制 : {{ descriptionShort.GuestMin }} ~ {{ descriptionShort.GuestMax }}人</p>
+          <p class="fz-14">床型 : {{ descriptionShort.Bed }}</p>
+          <p class="fz-14">衛浴數量 : {{ descriptionShort['Private-Bath'] }} 間</p>
+          <p class="fz-14">房間大小 : {{ descriptionShort.Footage }} 平方公尺</p>
+          <p class="fz-12">{{ room.description }}</p>
           <div class="border">
             <span></span>
             <span></span>
@@ -37,60 +79,60 @@ export default {
           <div class="time">
             <div>
               <span class="fz-14">Check In</span>
-              <p class="fz-20">15:00 - 21:00</p>
+              <p class="fz-20">{{ checkInAndOut.checkInEarly }} - {{ checkInAndOut.checkInLate }}</p>
             </div>
             <div>
               <span class="fz-14">Check Out</span>
-              <p class="fz-20">10:00</p>
+              <p class="fz-20">{{ checkInAndOut.checkOut }}</p>
             </div>
           </div>
           <div class="spec">
             <ul>
-              <li>
+              <li :class="!amenities[Wi-Fi] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'wifi']" /></div>
                 <span>Wi-Fi</span>
               </li>
-              <li>
+              <li :class="!amenities[Television] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'phone']" /></div>
                 <span>電話</span>
               </li>
-              <li>
+              <li :class="!amenities[Great-View] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'mountain-sun']" /></div>
                 <span>漂亮的視野</span>
               </li>
-              <li>
+              <li :class="!amenities[Breakfast] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'utensils']" /></div>
                 <span>早餐</span>
               </li>
-              <li>
+              <li :class="!amenities[Air-Conditioner] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'wind']" /></div>
                 <span>空調</span>
               </li>
-              <li>
+              <li :class="!amenities[Smoke-Free] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fasr', 'ban-smoking']" /></div>
                 <span>禁止吸菸</span>
               </li>
-              <li>
+              <li :class="!amenities[Mini-Bar] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'martini-glass-citrus']" /></div>
                 <span>Mini Bar</span>
               </li>
-              <li>
+              <li :class="!amenities[Refrigerator] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'box']" /></div>
                 <span>冰箱</span>
               </li>
-              <li>
+              <li :class="!amenities[Child-Friendly] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'baby']" /></div>
                 <span>適合兒童</span>
               </li>
-              <li>
+              <li :class="!amenities[Room-Service] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fass', 'bell']" /></div>
                 <span>Room Service</span>
               </li>
-              <li>
+              <li :class="!amenities[Sofa] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'couch']" /></div>
                 <span>沙發</span>
               </li>
-              <li>
+              <li :class="!amenities[Pet-Friendly] ? 'active' : ''">
                 <div class="icon"><font-awesome-icon :icon="['fas', 'dog']" /></div>
                 <span>寵物攜帶</span>
               </li>
@@ -98,9 +140,9 @@ export default {
           </div>
         </div>
         <div class="content-right">
-          <p class="fz-30">NT.1380</p>
+          <p class="fz-30">NT.{{ room.normalDayPrice }}</p>
           <span class="fz-14">平日(一~四)</span>
-          <p class="fz-16">NT.1500</p>
+          <p class="fz-16">NT.{{ room.holidayPrice }}</p>
           <span class="fz-14">假日(五~日)</span>
         </div>
       </div>
@@ -115,9 +157,43 @@ export default {
 <style lang="scss" scoped>
   .banner {
     height: 600px;
-    background-color: #d9d9d9;
+    // background-color: #d9d9d9;
     padding: 50px 50px 0;
   }
+  .banner-photo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    .photo-box {
+      position: relative;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+  .photo-left {
+    max-width: 1300px;
+    width: 100%;
+    // border: solid 1px;
+    .photo-box{
+      padding-bottom: 46.1%;
+    }
+  }
+  .photo-right {
+    max-width: 620px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .photo-box {
+      // border: solid 1px;
+      padding-bottom: 48.38%;
+    }
+  }
+
   .logo {
     max-width: 150px;
     position: relative;
