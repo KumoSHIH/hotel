@@ -104,15 +104,15 @@ export default {
         <ul class="contact">
           <li class="d-flex aic">
             <font-awesome-icon icon="phone" />
-            <p class="fz14">02-17264937</p>
+            <p class="fz-14">02-17264937</p>
           </li>
           <li class="d-flex aic">
             <font-awesome-icon icon="envelope" />
-            <p class="fz14">whitespace@whitespace.com.tw</p>
+            <p class="fz-14">whitespace@whitespace.com.tw</p>
           </li>
           <li class="d-flex aic">
             <font-awesome-icon icon="house" />
-            <p class="fz14">台北市羅斯福路十段30號</p>
+            <p class="fz-14">台北市羅斯福路十段30號</p>
           </li>
         </ul>
       </div>
